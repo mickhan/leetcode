@@ -7,15 +7,13 @@ func reverse(x int) int {
 	// 用一个数组保存每一位
 	var seq []int
 	var remain int
-	remain = x % 10
-	x = x / 10
 	for {
+		remain = x % 10
+		x = x / 10
 		if remain == 0 && x == 0 {
 			break
 		}
 		seq = append(seq, remain)
-		remain = x % 10
-		x = x / 10
 	}
 	// seq 已经是反转的了，拼接成完整的整数
 	var ret int
@@ -31,5 +29,7 @@ func reverse(x int) int {
 }
 
 func main() {
-	fmt.Print(reverse(-2147483648))
+	fmt.Println(reverse(123))
+	fmt.Println(reverse(-12345))
+	fmt.Println(reverse(-2147483648))
 }
