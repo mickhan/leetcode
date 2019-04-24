@@ -40,12 +40,10 @@ func isValid(s string) bool {
 			continue
 		}
 		if c == ")" || c == "]" || c == "}" {
-			a := stack.Pop()
-			if a == nil {
+			if stack.Empty() {
 				return false
 			}
-			p := a.(string)
-			if parentheses[p] == c {
+			if parentheses[stack.Pop().(string)] == c {
 				continue
 			} else {
 				return false
