@@ -6,25 +6,16 @@ type ListNode struct {
 }
 
 func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
-	var head, tail *ListNode
+	var tail *ListNode
+	prehead := &ListNode{}
 	// 处理为空的情况
 	if l1 == nil {
-		head = l2
-		return head
+		return l2
 	}
 	if l2 == nil {
-		head = l1
-		return head
+		return l1
 	}
-	// 决定head指向哪
-	if l1.Val <= l2.Val {
-		head = l1
-		l1 = l1.Next
-	} else {
-		head = l2
-		l2 = l2.Next
-	}
-	tail = head
+	tail = prehead
 	for {
 		// 遍历完了l1/l2，把剩余的追加到tail，退出
 		if l1 == nil {
@@ -46,7 +37,7 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 		// 移动tail
 		tail = tail.Next
 	}
-	return head
+	return prehead.Next
 }
 
 func main() {
