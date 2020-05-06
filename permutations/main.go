@@ -12,7 +12,7 @@ func makeOptions(i int, options []int) []int {
 	return ret
 }
 
-func backtrace(pos int, options []int) {
+func backtrace(options []int) {
 	// 当前尝试的长度等于全集，说明排列完成，记录到结果中
 	if len(cur) == len(gnums) {
 		tmp := make([]int, len(cur))
@@ -24,7 +24,7 @@ func backtrace(pos int, options []int) {
 		cur = append(cur, options[i])
 		opt := make([]int, len(options))
 		copy(opt, options)
-		backtrace(pos+1, makeOptions(i, opt))
+		backtrace(makeOptions(i, opt))
 		cur = cur[:len(cur)-1]
 	}
 }
@@ -32,7 +32,7 @@ func backtrace(pos int, options []int) {
 func permute(nums []int) [][]int {
 	sets = make([][]int, 0)
 	gnums = nums
-	backtrace(0, nums)
+	backtrace(nums)
 	return sets
 }
 
