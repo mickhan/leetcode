@@ -8,21 +8,15 @@ type TreeNode struct {
 
 func mergeTrees(t1 *TreeNode, t2 *TreeNode) *TreeNode {
 	node := TreeNode{}
-	if t1 == nil && t2 == nil {
-		return nil
-	} else if t1 != nil && t2 == nil {
-		node.Val = t1.Val
-		node.Left = mergeTrees(t1.Left, nil)
-		node.Right = mergeTrees(t1.Right, nil)
-	} else if t1 == nil && t2 != nil {
-		node.Val = t2.Val
-		node.Left = mergeTrees(nil, t2.Left)
-		node.Right = mergeTrees(nil, t2.Right)
-	} else {
-		node.Val = t1.Val + t2.Val
-		node.Left = mergeTrees(t1.Left, t2.Left)
-		node.Right = mergeTrees(t1.Right, t2.Right)
+	// 一个分支为空的话，合并结果就等于另一个分支
+	if t1 == nil {
+		return t2
+	} else if t2 == nil {
+		return t1
 	}
+	node.Val = t1.Val + t2.Val
+	node.Left = mergeTrees(t1.Left, t2.Left)
+	node.Right = mergeTrees(t1.Right, t2.Right)
 	return &node
 }
 
