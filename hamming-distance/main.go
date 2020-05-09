@@ -29,6 +29,20 @@ func hammingDistance(x int, y int) int {
 	return hamDist
 }
 
+// 使用位运算
+func hammingDistance2(x int, y int) int {
+	var hamDist int
+	for x != y {
+		if x&1 != y&1 {
+			hamDist++
+		}
+		x >>= 1
+		y >>= 1
+	}
+	return hamDist
+}
+
 func main() {
 	fmt.Println(hammingDistance(1, 4))
+	fmt.Println(hammingDistance2(1, 4))
 }
