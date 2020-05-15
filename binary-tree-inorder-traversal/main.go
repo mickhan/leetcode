@@ -8,21 +8,20 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-var gRes []int
-
-func inorder(root *TreeNode) {
+func inorder(root *TreeNode, res *[]int) {
 	if root == nil {
 		return
 	}
-	inorder(root.Left)
-	gRes = append(gRes, root.Val)
-	inorder(root.Right)
+	inorder(root.Left, res)
+	*res = append(*res, root.Val)
+	inorder(root.Right, res)
 }
 
 func inorderTraversal(root *TreeNode) []int {
-	gRes = make([]int, 0)
-	inorder(root)
-	return gRes
+	var res []int
+	res = make([]int, 0)
+	inorder(root, &res)
+	return res
 }
 
 func main() {
