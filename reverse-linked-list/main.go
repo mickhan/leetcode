@@ -44,15 +44,15 @@ func reverseList3(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
-	var cur, pre, t *ListNode
-	cur = head
-	for cur != nil {
-		t = cur.Next
-		cur.Next = pre
-		pre = cur
-		cur = t
+	var newHead, node *ListNode
+	// 每次从旧链表的头部拆下一个节点，插入到新链表的头部，即可反向
+	for head != nil {
+		node = head
+		head = head.Next
+		node.Next = newHead
+		newHead = node
 	}
-	return pre
+	return newHead
 }
 
 func printList(head *ListNode) {
