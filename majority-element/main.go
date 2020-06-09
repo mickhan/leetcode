@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func majorityElement(nums []int) int {
 	var major, max int
@@ -17,6 +20,11 @@ func majorityElement(nums []int) int {
 	return major
 }
 
+func majorityElement2(nums []int) int {
+	sort.Ints(nums)
+	return nums[len(nums)/2]
+}
+
 func main() {
-	fmt.Println(majorityElement([]int{3, 2, 3}))
+	fmt.Println(majorityElement2([]int{3, 2, 3}))
 }
