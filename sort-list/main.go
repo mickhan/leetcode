@@ -63,6 +63,50 @@ func sortList(head *ListNode) *ListNode {
     return head
 }
 
+func sortList2(head *ListNode) *ListNode {
+    if head == nil || head.Next == nil {
+        return head
+    }
+    // 使用快慢指针找到中点
+    slow, fast := head, head.Next
+    for fast != nil && fast.Next != nil {
+        slow = slow.Next
+        fast = fast.Next.Next
+    }
+    // 归并排序
+    right := sortList(slow.Next)
+    slow.Next = nil
+    left := sortList(head)
+    prehead := &ListNode{}
+    prehead.Next = head
+    // 合并结果
+    return mergeList(prehead, left, right)
+}
+
+func mergeList(prehead *ListNode, l1 *ListNode, l2 *ListNode) *ListNode {
+    tail := prehead
+    // 合并直到l1/l2为空
+    for l1 != nil && l2 != nil{
+        if l1.Val <= l2.Val {
+			tail.Next = l1
+			l1 = l1.Next
+		} else {
+			tail.Next = l2
+			l2 = l2.Next
+		}
+		// 移动tail
+		tail = tail.Next
+    }
+    // 把不为空的链表接在末尾
+    if l1 == nil {
+        tail.Next = l2
+    }
+    if l2 == nil {
+        tail.Next = l1
+    }
+    return prehead.Next
+}
+
 func main() {
     n1 := &ListNode{ Val: 1 }
     n2 := &ListNode{ Val: 5 }
@@ -74,7 +118,7 @@ func main() {
     n3.Next = n4
     n4.Next = n5
 
-    h := sortList(n1)
+    h := sortList2(n1)
 
     for {
         if h == nil {
