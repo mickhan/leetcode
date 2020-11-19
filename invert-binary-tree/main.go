@@ -14,10 +14,7 @@ func invertTree(root *TreeNode) *TreeNode {
 	}
 	invertTree(root.Left)
 	invertTree(root.Right)
-	var t *TreeNode
-	t = root.Left
-	root.Left = root.Right
-	root.Right = t
+	root.Left, root.Right = root.Right, root.Left
 	return root
 }
 
