@@ -6,39 +6,39 @@ import (
 )
 
 func minPathSum(grid [][]int) int {
-	n := len(grid)
-	m := len(grid[0])
-	res := make([][]int, n)
+	m := len(grid)
+	n := len(grid[0])
+	// fmt.Println(m, n)
+	res := make([][]int, m)
 	for i := range res {
-		res[i] = make([]int, m)
+		res[i] = make([]int, n)
 	}
-	// 从右下角开始，逐渐填充结果矩阵
-	for i := n - 1; i >= 0; i-- {
-		for j := m - 1; j >= 0; j-- {
-			var down, right int
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
 			res[i][j] = grid[i][j]
-			// 向下
-			if j == m-1 {
-				down = math.MaxInt32
-			} else {
-				down = res[i][j+1]
+			// 0,0 不需计算
+			if i == 0 && j == 0 {
+				continue	
 			}
-			// 向右
-			if i == n-1 {
-				right = math.MaxInt32
-			} else {
-				right = res[i+1][j]
+			// 第一行 只能向右
+			if i == 0 {
+				res[i][j] = res[i][j-1]+res[i][j]
+				continue
 			}
-			// 选择其中较小的，加上本格的花费，作为本格的最优解
-			if j != m-1 || i != n-1 {
-				res[i][j] = int(math.Min(float64(down), float64(right))) + res[i][j]
+			// 第一列 只能向下
+			if j == 0 {
+				res[i][j] = res[i-1][j]+res[i][j]
+				continue
 			}
+			// 其他 min(向下,向右)
+			res[i][j] = int(math.Min(float64(res[i-1][j]), float64(res[i][j-1]))) + res[i][j]
 		}
 	}
-	return res[0][0]
+	// fmt.Printf("%+v", res)
+	return res[m-1][n-1]
 }
 
 func main() {
 	fmt.Println(minPathSum([][]int{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}))
-	fmt.Println(minPathSum([][]int{{1, 2, 5}, {3, 2, 1}}))
+	fmt.Println(minPathSum([][]int{{1, 2, 3}, {4, 5, 6}}))
 }
