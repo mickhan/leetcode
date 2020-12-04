@@ -7,17 +7,17 @@ type TreeNode struct {
 }
 
 func constructMaximumBinaryTree(nums []int) *TreeNode {
-	return recursion(nums)
+	return recursion(nums, 0, len(nums))
 }
 
-func recursion(nums []int) *TreeNode {
-	if len(nums) == 0 {
+func recursion(nums []int, start int, end int) *TreeNode {
+	if start >= end {
 		return nil
 	}
 	// 找到最大值
-	maxNums := nums[0]
+	maxNums := nums[start]
 	var idx int
-	for i := 0; i < len(nums); i++ {
+	for i := start; i < end; i++ {
 		if nums[i] >= maxNums {
 			maxNums = nums[i]
 			idx = i
@@ -25,23 +25,13 @@ func recursion(nums []int) *TreeNode {
 	}
 	// 创建当前节点
 	node := TreeNode{Val: maxNums}
-	// fmt.Println(nums, idx, node.Val)
+	// fmt.Println(nums, start, end, idx, node.Val)
 	// 数组拆分成两半
-	// 左
-	if idx > 0 {
-		l := make([]int, idx)
-		copy(l, nums[:idx])
-		node.Left = recursion(l)
-	}
-	// 右
-	if len(nums)-idx > 0 {
-		r := make([]int, len(nums)-idx-1)
-		copy(r, nums[idx+1:])
-		node.Right = recursion(r)
-	}
+	node.Left = recursion(nums, start, idx)
+	node.Right = recursion(nums, idx+1, end)
 	return &node
 }
 
 func main() {
-	recursion([]int{3, 2, 1, 6, 0, 5})
+	constructMaximumBinaryTree([]int{3, 2, 1, 6, 0, 5})
 }
