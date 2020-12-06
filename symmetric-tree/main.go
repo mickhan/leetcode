@@ -38,6 +38,23 @@ func isSymmetric(root *TreeNode) bool {
 	return tree1 == tree2
 }
 
+func recursion2(l *TreeNode, r *TreeNode) bool {
+	if l == r && l == nil {
+		return true
+	}
+	if l == nil || r == nil {
+		return false
+	}
+	return l.Val == r.Val && recursion2(l.Left, r.Right) && recursion2(l.Right, r.Left)
+}
+
+func isSymmetric2(root *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+	return recursion2(root.Left, root.Right)
+}
+
 func main() {
 	nA1 := TreeNode{Val: 1}
 	nA2 := TreeNode{Val: 2}
@@ -52,5 +69,5 @@ func main() {
 	nA2.Right = &nA5
 	nA3.Left = &nA6
 	nA3.Right = &nA7
-	fmt.Println(isSymmetric(&nA1))
+	fmt.Println(isSymmetric2(&nA1))
 }
