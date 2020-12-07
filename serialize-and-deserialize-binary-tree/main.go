@@ -39,12 +39,12 @@ func recursion(data []string) (*TreeNode, int) {
 	node := TreeNode{}
 	node.Val, _ = strconv.Atoi(t)
 	var lenL, lenR int
-	fmt.Println(data)
+	// fmt.Println(data)
 	node.Left, lenL = recursion(data)
 	data = data[lenL:]
-	fmt.Println(data)
+	// fmt.Println(data)
 	node.Right, lenR = recursion(data)
-	fmt.Println(node.Val, lenL, lenR)
+	// fmt.Println(node.Val, lenL, lenR)
 	return &node, lenL + lenR + 1
 }
 
