@@ -17,19 +17,13 @@ func recursion(root *TreeNode, upper int, lower int) bool {
 	if root == nil {
 		return true
 	}
-	if !recursion(root.Left, root.Val, lower) || !recursion(root.Right, upper, root.Val) {
-		return false
-	}
 	if root.Val <= lower || root.Val >= upper {
 		return false
 	}
-	return true
+	return recursion(root.Left, root.Val, lower) && recursion(root.Right, upper, root.Val)
 }
 
 func isValidBST(root *TreeNode) bool {
-	if root == nil {
-		return true
-	}
 	return recursion(root, math.MaxInt64, math.MinInt64)
 }
 
